@@ -1,0 +1,1 @@
+/opt/miniconda/envs/r42/bin/python /mnt/ssd/geneplus/develop/liushen/DDRTree/test/test_ddrtree/test.py  > ./output/compile.log 2>&1

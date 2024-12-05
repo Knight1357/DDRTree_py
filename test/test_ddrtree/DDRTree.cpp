@@ -3,6 +3,7 @@
 #include <boost/functional/hash.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/prim_minimum_spanning_tree.hpp>
+#include <iostream>
 
 // using namespace boost;
 // using boost::functional;
@@ -320,6 +321,13 @@ void DDRTree_reduce_dim_cpp(const Eigen::MatrixXd &X_in,
 
         tmp_R = tmp_R.array().exp().matrix();
 
+        // 数值检查
+        if (!tmp_R.allFinite())
+        {
+            std::cerr << "tmp_R contains NaN or Inf at iteration " << iter << std::endl;
+            return;
+        }
+
         if (verbose)
             std::cout << "   R : (" << R.rows() << " x " << R.cols() << ")" << std::endl;
         // R <- tmp_R / matrix(rep(rowSums(tmp_R), times = K), byrow = F, ncol = K)
@@ -358,7 +366,7 @@ void DDRTree_reduce_dim_cpp(const Eigen::MatrixXd &X_in,
             std::cout << "   W : (" << W_out.rows() << " x " << W_out.cols() << ")" << std::endl;
             std::cout << "   Z : (" << Z_out.rows() << " x " << Z_out.cols() << ")" << std::endl;
         }
- 
+
         double obj2 = (X_in - W_out * Z_out).norm();
         // std::cout << "norm = " << obj2 << std::endl;
         obj2 = obj2 * obj2;
@@ -612,7 +620,6 @@ std::map<std::string, Eigen::MatrixXd> DDRTree_reduce_dim(
     MatrixXd R;
 
     DDRTree_reduce_dim_cpp(X, Z, Y, W, dimensions, maxiter, num_clusters, sigma, lambda, gamma, eps, verbose, Y_res, stree_res, Z_res, W_out, Q, R, objective_vals);
-
 
     std::map<std::string, Eigen::MatrixXd> result;
     result["W"] = W_out;

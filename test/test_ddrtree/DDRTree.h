@@ -1,7 +1,7 @@
 #ifndef _DDRTree_DDRTREE_H
 #define _DDRTree_DDRTREE_H
 
-#include <Rcpp.h>
+// #include <Rcpp.h>
 #include <Eigen/Dense> // 修改为标准 Eigen
 #include <Eigen/Sparse>
 

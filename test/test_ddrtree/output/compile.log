@@ -1,0 +1,95 @@
+************************************** 
+Iteration: 0
+updating weights in graph
+Finding MST
+Refreshing B matrix
+   B : (3 x 3)
+   distZY : (50 x 3)
+   min_dist : (50 x 3)
+distZY_minCoeff = 
+   tmp_R : (50 x 3)
+   R : (50 x 3)
+   Gamma : (3 x 3)
+   X : (10 x 50)
+   W : (10 x 2)
+   Z : (2 x 50)
+   L : (3 x 3)
+Checking termination criterion
+Computing tmp
+... stage 1
+... stage 2
+Pre-computing LLT analysis
+tmp is (3x3), 9 non-zero values
+Computing LLT
+tmp_dense 50x3) 
+Computing Q 3x50) 
+gamma: 0.1
+   X_in : (10 x 50)
+   Q : (10 x 50)
+Computing W
+Computing Z
+Computing Y
+************************************** 
+Iteration: 1
+updating weights in graph
+Finding MST
+Refreshing B matrix
+   B : (3 x 3)
+   distZY : (50 x 3)
+   min_dist : (50 x 3)
+distZY_minCoeff = 
+   tmp_R : (50 x 3)
+   R : (50 x 3)
+   Gamma : (3 x 3)
+   X : (10 x 50)
+   W : (10 x 2)
+   Z : (2 x 50)
+   L : (3 x 3)
+Checking termination criterion
+delta_obj: 0.717026
+Computing tmp
+... stage 1
+... stage 2
+Pre-computing LLT analysis
+tmp is (3x3), 9 non-zero values
+Computing LLT
+tmp_dense 50x3) 
+Computing Q 10x50) 
+gamma: 0.1
+   X_in : (10 x 50)
+   Q : (10 x 50)
+Computing W
+Computing Z
+Computing Y
+************************************** 
+Iteration: 2
+updating weights in graph
+Finding MST
+Refreshing B matrix
+   B : (3 x 3)
+   distZY : (50 x 3)
+   min_dist : (50 x 3)
+distZY_minCoeff = 
+   tmp_R : (50 x 3)
+   R : (50 x 3)
+   Gamma : (3 x 3)
+   X : (10 x 50)
+   W : (10 x 2)
+   Z : (2 x 50)
+   L : (3 x 3)
+Checking termination criterion
+delta_obj: 1.44592e-06
+Clearing MST sparse matrix
+Setting up MST sparse matrix with 3
+X shape: 10 50
+Z shape: 2 50
+Y shape: 2 3
+W shape: 10 2
+-------------------------------------------------------------
+W shape: (10, 2)
+Z shape: (2, 50)
+stree shape: (50, 50)
+Y shape: (2, 3)
+Q shape: (10, 50)
+R shape: (50, 3)
+Objective values: [95.72919603 27.08884795 27.08880878]
