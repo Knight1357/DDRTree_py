@@ -18,6 +18,7 @@ src/*.so
 
 #.vscode files
 .vscode/
+.cph/
 
 # make
 *.so

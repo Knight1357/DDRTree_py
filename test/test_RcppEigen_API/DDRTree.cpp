@@ -3,6 +3,7 @@
 #include <boost/functional/hash.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/prim_minimum_spanning_tree.hpp>
+#include <iostream>
 
 // using namespace boost;
 // using boost::functional;
