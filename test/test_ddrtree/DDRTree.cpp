@@ -79,42 +79,16 @@ Eigen::MatrixXd sqdist(const Eigen::MatrixXd &A, const Eigen::MatrixXd &B)
 
 void sq_dist_cpp(const MatrixXd &a, const MatrixXd &b, MatrixXd &W)
 {
-    //     aa <- colSums(a^2)
-    //     bb <- colSums(b^2)
-    //     ab <- t(a) %*% b
-    //
-    //     aa_repmat <- matrix(rep(aa, times = ncol(b)), ncol = ncol(b), byrow = F)
-    //     bb_repmat <- matrix(rep(bb, times = ncol(a)), nrow = ncol(a), byrow = T)
-    //     dist <- abs(aa_repmat + bb_repmat - 2 * ab)
+    // 计算 a 和 b 的列范数的平方
+    VectorXd aa = a.colwise().squaredNorm();
+    VectorXd bb = b.colwise().squaredNorm();
 
-    //    std::cout << "   a nan check : (" << a.rows() << "x" << a.cols() << ", " << a.maxCoeff() << " )" << std::endl;
-    //    std::cout << "   b nan check : (" << b.rows() << "x" << b.cols() << ", " << b.maxCoeff() << " )" << std::endl;
-
-    VectorXd aa = (a.array() * a.array()).colwise().sum();
-    VectorXd bb = (b.array() * b.array()).colwise().sum();
+    // 计算矩阵乘积
     MatrixXd ab = a.transpose() * b;
-    //    std::cout << "   ab nan check : (" << ab.rows() << "x" << ab.cols() << ", " << ab.maxCoeff() << " )" << std::endl;
 
-    MatrixXd aa_repmat;
-    aa_repmat.resize(a.cols(), b.cols());
-    for (int i = 0; i < aa_repmat.cols(); i++)
-    {
-        aa_repmat.col(i) = aa;
-    }
-    //    std::cout << "   aa_repmat nan check : (" << aa_repmat.rows() << "x" << aa_repmat.cols() << ", " << aa_repmat.maxCoeff() << " )" << std::endl;
-
-    MatrixXd bb_repmat;
-    bb_repmat.resize(a.cols(), b.cols());
-    for (int i = 0; i < bb_repmat.rows(); i++)
-    {
-        bb_repmat.row(i) = bb;
-    }
-
-    //    std::cout << "   bb_repmat nan check : (" << bb_repmat.rows() << "x" << bb_repmat.cols() << ", " << bb_repmat.maxCoeff() << " )" << std::endl;
-    W = aa_repmat + bb_repmat - 2 * ab;
-    //    std::cout << "   W nan check : (" << W.rows() << "x" << W.cols() << ", " << W.maxCoeff() << " )" << std::endl;
-
-    W = W.array().abs().matrix();
+    // 使用广播计算平方距离矩阵
+    W = aa.replicate(1, bb.size()) + bb.transpose().replicate(aa.size(), 1) - 2 * ab;
+    W = W.array().abs();
 }
 
 void DDRTree_reduce_dim_cpp(const Eigen::MatrixXd &X_in,
