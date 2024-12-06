@@ -479,8 +479,8 @@ void DDRTree_reduce_dim_cpp(const Eigen::MatrixXd &X_in,
         }
 
         // C <- X %*% Q
-        // C = X_in * Q;
-        C = Q;
+        C = X_in * Q;
+        // C = Q;
 
         tmp1 = Q * X_in.transpose();
 

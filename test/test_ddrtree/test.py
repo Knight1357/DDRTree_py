@@ -1,5 +1,9 @@
 import numpy as np
-from ddr_tree import DDRTree_reduce_dim
+try:
+    from ddr_tree import DDRTree_reduce_dim
+except ImportError:
+    print("无法导入 ddr_tree 模块或 DDRTree_reduce_dim 函数，请检查模块是否安装正确及函数名是否准确。")
+    raise
 
 # 设置随机种子
 np.random.seed(42)
@@ -9,11 +13,11 @@ n_samples = 50      # 样本数量（N）
 n_features = 10     # 原始特征维度（D）
 dimensions = 2      # 降维后的维度（d）
 num_clusters = 3    # 聚类数量（K）
-maxiter = 10        # 最大迭代次数
-sigma = 1.0         # 高斯核参数（调整为较大值，避免数值问题）
+maxiter = 20        # 最大迭代次数
+sigma = 1e-3        # 高斯核参数
 lambda_ = 0.1       # 正则化参数
-gamma = 0.1         # 权重参数
-eps = 1e-5          # 收敛阈值
+gamma = 10         # 权重参数
+eps = 1e-3          # 收敛阈值
 verbose = True      # 是否输出详细信息
 
 # 生成可控的随机数据
