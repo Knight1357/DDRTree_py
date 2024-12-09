@@ -1,7 +1,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/eigen.h> // 用于 Eigen 类型
 #include "DDRTree.h"
-
+#include <iostream>
 namespace py = pybind11;
 
 // pca_projection 函数绑定
@@ -62,7 +62,13 @@ py::dict DDRTree_reduce_dim_py(py::array_t<double> R_X, py::array_t<double> R_Z,
     py::dict result;
     result["W"] = py::array_t<double>({W_out.rows(), W_out.cols()}, W_out.data());
     result["Z"] = py::array_t<double>({Z_res.rows(), Z_res.cols()}, Z_res.data());
-    result["stree"] = py::array_t<double>({stree_res.rows(), stree_res.cols()}, stree_res.valuePtr());
+    // 将稀疏矩阵转换为稠密矩阵
+    Eigen::MatrixXd stree_dense = Eigen::MatrixXd(stree_res);
+    // 获取稠密矩阵的形状
+    std::vector<std::size_t> shape = {static_cast<std::size_t>(stree_dense.rows()), static_cast<std::size_t>(stree_dense.cols())};
+    // 将稠密矩阵的指针传给 py::array_t
+    result["stree"] = py::array_t<double>(shape, stree_dense.data());
+
     result["Y"] = py::array_t<double>({Y_res.rows(), Y_res.cols()}, Y_res.data());
     result["Q"] = py::array_t<double>({Q.rows(), Q.cols()}, Q.data());
     result["R"] = py::array_t<double>({R.rows(), R.cols()}, R.data());
