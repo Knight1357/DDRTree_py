@@ -1,28 +1,52 @@
 from setuptools import setup, Extension
-import pybind11
+from setuptools.command.build_ext import build_ext
+import os
 import numpy as np
+import pybind11
 
-# 使用 pybind11 和 setuptools 创建 Python 扩展
+class build_ext_subclass(build_ext):
+    def run(self):
+        # 如果需要 Boost 或其他依赖，这里可以动态设置环境变量
+        os.environ['CXXFLAGS'] = f"-I{os.getenv('CONDA_PREFIX', '')}/include"
+        os.environ['LIBRARY_PATH'] = f"{os.getenv('CONDA_PREFIX', '')}/lib"
+        build_ext.run(self)
+
+# 定义 C++ 扩展模块
 ext_modules = [
     Extension(
-        "ddr_tree",  # 扩展模块的名称
-        ["DDRTree_wrapper.cpp","DDRTree.cpp"],  # C++ 源文件
-        include_dirs=[
-            pybind11.get_include(),  # pybind11 的头文件目录
-            np.get_include(),  # 获取 NumPy 的头文件目录
-            "/opt/miniconda/envs/r42/lib/R/include",
-            "/opt/miniconda/envs/r42/include"
+        name='ddr_tree_py.ddr_tree_wrapper',  # Python 中的模块名称
+        sources=[
+            'ddr_tree_py/_core/DDRTree_wrapper.cpp',
+            'ddr_tree_py/_core/DDRTree.cpp',
         ],
-        library_dirs=["/opt/miniconda/envs/r42/lib/R/lib"],  # 添加库文件目录
-        language="c++",  # 指定语言为 C++
-        extra_compile_args=["-std=c++11"],  # 编译选项
+        include_dirs=[
+            'ddr_tree_py/_core',  # C++ 头文件所在目录
+            pybind11.get_include(),  # pybind11 的头文件
+            np.get_include(),  # NumPy 的头文件
+        ],
+        language='c++',
+        extra_compile_args=['-std=c++11'],  # 使用 C++11 标准
     )
 ]
 
-# 使用 setuptools 设置
+# 配置 setup
 setup(
-    name="ddr_tree",  # 模块名称
-    version='1.0',
-    ext_modules=ext_modules,  # 扩展模块
-    install_requires=["numpy"],  # 安装依赖
+    name='ddr-tree-py',
+    version='1.0.0',
+    author='Your Name',
+    author_email='your.email@example.com',
+    description='A Python package for DDRTree, with C++ implementation',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url='https://github.com/yourusername/ddr_tree',
+    packages=['ddr_tree_py'],  # 仅包含 Python 包 ddr_tree
+    ext_modules=ext_modules,  # 指定 C++ 扩展模块
+    cmdclass={'build_ext': build_ext_subclass},  # 自定义构建类
+    install_requires=[
+        'pybind11',  # 绑定工具
+        'numpy',  # 数值计算
+        'scipy',  # 线性代数
+    ],
+    tests_require=['pytest'],  # 测试工具
+    test_suite='tests',  # 测试目录
 )

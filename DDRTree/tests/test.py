@@ -1,6 +1,6 @@
 import numpy as np
 try:
-    from ddr_tree import DDRTree_reduce_dim
+    from ddr_tree_py import DDRTree_reduce_dim
 except ImportError:
     print("无法导入 ddr_tree 模块或 DDRTree_reduce_dim 函数，请检查模块是否安装正确及函数名是否准确。")
     raise
