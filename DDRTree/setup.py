@@ -1,5 +1,6 @@
 from setuptools import setup, Extension
 import pybind11
+import numpy as np
 
 # 使用 pybind11 和 setuptools 创建 Python 扩展
 ext_modules = [
@@ -8,6 +9,7 @@ ext_modules = [
         ["DDRTree_wrapper.cpp","DDRTree.cpp"],  # C++ 源文件
         include_dirs=[
             pybind11.get_include(),  # pybind11 的头文件目录
+            np.get_include(),  # 获取 NumPy 的头文件目录
             "/opt/miniconda/envs/r42/lib/R/include",
             "/opt/miniconda/envs/r42/include"
         ],

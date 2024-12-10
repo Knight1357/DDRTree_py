@@ -2,6 +2,7 @@ import numpy as np
 from scipy.linalg import eigh  # 用于进行特征分解
 from scipy.stats import norm   # 用于计算正态分布分位数
 from scipy.sparse.linalg import svds  # 近似奇异值分解，类似于R中的irlba
+import ddr_tree
 
 def pca_projection_python(C, L):
     # C: 用于PCA的数据矩阵
@@ -162,9 +163,9 @@ def DDRTree(X,
     if lambda_param is None:
         lambda_param = 5 * N
 
-    # 这里假设我们有 DDRTree_reduce_dim 的实现
-    ddrtree_res = DDRTree_reduce_dim(X, Z, Y, W, dimensions, maxIter, K, sigma, lambda_param, param_gamma, tol, verbose)
-
+    # 修改为调用 C++ 绑定的函数
+    ddrtree_res = ddr_tree.DDRTree_reduce_dim(X, Z, Y, W, dimensions, maxIter, K, sigma, lambda_param, param_gamma, tol, verbose)
+    
     return {
         'W': ddrtree_res['W'],
         'Z': ddrtree_res['Z'],
