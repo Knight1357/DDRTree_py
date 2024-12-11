@@ -70,6 +70,9 @@ py::dict DDRTree_reduce_dim_py(py::array_t<double> R_X, py::array_t<double> R_Z,
     result["stree"] = py::array_t<double>(shape, stree_dense.data());
 
     result["Y"] = py::array_t<double>({Y_res.rows(), Y_res.cols()}, Y_res.data());
+    // 返回 X 矩阵
+    result["X"] = py::array_t<double>({R_X.shape(0), R_X.shape(1)}, R_X.data());
+    
     result["Q"] = py::array_t<double>({Q.rows(), Q.cols()}, Q.data());
     result["R"] = py::array_t<double>({R.rows(), R.cols()}, R.data());
     result["objective_vals"] = py::array_t<double>({static_cast<pybind11::size_t>(objective_vals.size())}, objective_vals.data());

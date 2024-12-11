@@ -8,13 +8,8 @@ ext_modules = [
         ["DDRTree_wrapper.cpp","DDRTree.cpp"],  # C++ 源文件
         include_dirs=[
             pybind11.get_include(),  # pybind11 的头文件目录
-            # "/opt/miniconda/envs/r42/lib/R/library/Rcpp/include",
-            # "/opt/miniconda/envs/r42/lib/R/library/RcppEigen/include",
-            # "/opt/miniconda/envs/r42/lib/R/include",
             "/opt/miniconda/envs/r42/include"
         ],
-        # library_dirs=["/opt/miniconda/envs/r42/lib/R/lib"],  # 添加库文件目录
-        # libraries=["R"],
         language="c++",  # 指定语言为 C++
         extra_compile_args=["-std=c++11"],  # 编译选项
     )
