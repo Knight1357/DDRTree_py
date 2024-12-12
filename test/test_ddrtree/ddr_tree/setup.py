@@ -11,7 +11,9 @@ ext_modules = [
             "/opt/miniconda/envs/r42/include"
         ],
         language="c++",  # 指定语言为 C++
-        extra_compile_args=["-std=c++11"],  # 编译选项
+        extra_compile_args=["-std=c++17"],  # 编译选项
+        # extra_compile_args=["-std=c++17","-fopenmp"],  # 编译选项
+        # extra_link_args=["-fopenmp"],
     )
 ]
 

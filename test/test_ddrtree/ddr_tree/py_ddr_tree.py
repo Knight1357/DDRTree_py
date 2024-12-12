@@ -3,8 +3,12 @@ from scipy.linalg import eigh  # 用于进行特征分解
 from scipy.stats import norm   # 用于计算正态分布分位数
 from scipy.sparse.linalg import svds  # 近似奇异值分解，类似于R中的irlba
 from sklearn.cluster import KMeans
+from utils import time_func
+from loguru import logger
 
+@time_func
 def pca_projection_python(C, L):
+    logger.warning(f"开始python pca降维")
     # C: 用于PCA的数据矩阵
     # L: 要计算的主成分的数量
     num_features, num_samples = C.shape
@@ -33,6 +37,7 @@ def pca_projection_python(C, L):
         # 使用稀疏SVD进行近似PCA，当L小于维度时
         u, s, vt = svds(C, k=L, v0=initial_v)
 
+        logger.warning(f"结束python pca降维")
         # 返回前L个右奇异向量（在R中是V）
         return vt.T
 
@@ -88,7 +93,7 @@ def DDRTree(X,
         K = ncenter
         if K > Z.shape[1]:
             raise ValueError("错误: ncenter 必须大于等于 ncol(X)")
-        centers = Z[:, np.linspace(0, Z.shape[1]-1, K, dtype=int)]
+        centers = Z[:, np.linspace(0, Z.shape[1]-1, K, dtype=int)].T
         kmeans = KMeans(n_clusters=K, init=centers)
         kmeans.fit(Z.T)
         
