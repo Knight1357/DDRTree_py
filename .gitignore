@@ -205,6 +205,6 @@ datasets/
 *.png
 *jpge
 
-# zip
+# zip tar.gz
 *.zip
 *.tar.gz
