@@ -198,3 +198,13 @@ cython_debug/
 data/
 output/
 datasets/
+
+
+# png jpge
+
+*.png
+*jpge
+
+# zip
+*.zip
+*.tar.gz
