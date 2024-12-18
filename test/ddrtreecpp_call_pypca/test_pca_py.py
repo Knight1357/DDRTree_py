@@ -1,5 +1,5 @@
 import numpy as np
-from utils import time_func
+from test.ddrtreecpp_call_pypca.DDRTree_py.utils import time_func
 from loguru import logger
 from py_ddr_tree import DDRTree
 try:

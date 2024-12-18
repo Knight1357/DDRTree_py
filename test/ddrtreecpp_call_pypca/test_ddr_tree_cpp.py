@@ -1,8 +1,14 @@
 import numpy as np
-from utils import time_func
+import sys
+import os
 from loguru import logger
 try:
-    from ddr_tree import DDRTree_reduce_dim
+    # 获取当前脚本路径，添加共享库所在的路径
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    so_path = os.path.join(current_dir, "DDRTree_py")
+    sys.path.append(so_path)
+    import DDRTree_cpp
+    from utils import time_func
 except ImportError:
     print("无法导入 ddr_tree 模块或 DDRTree_reduce_dim 函数，请检查模块是否安装正确及函数名是否准确。")
     raise
@@ -15,12 +21,10 @@ def test_ddr_tree_cpp():
     np.random.seed(42)
 
     # 参数设置
-    # n_samples = 5000      # 样本数量（N）
-    # n_features = 2000     # 原始特征维度（D）
-    n_samples = 1000000      # 样本数量（N）
-    n_features = 2000     # 原始特征维度（D）
-    num_clusters = 100    # 聚类数量（K）
-    dimensions = 2      # 降维后的维度（d）
+    n_samples = 30      # 样本数量（N）
+    n_features = 10    # 原始特征维度（D）
+    num_clusters = 2   # 聚类数量（K）
+    dimensions = 5      # 降维后的维度（d）
     maxiter = 20        # 最大迭代次数
     sigma = 1e-3        # 高斯核参数
     lambda_ = 0.1       # 正则化参数
@@ -41,7 +45,7 @@ def test_ddr_tree_cpp():
 
     # 调用函数
     logger.warning(f"开始调用 DDRTree_reduce_dim 函数")
-    result = DDRTree_reduce_dim(
+    result = DDRTree_cpp.DDRTree_reduce_dim(
         R_X, R_Z, R_Y, R_W,
         dimensions, maxiter, num_clusters,
         sigma, lambda_, gamma, eps, verbose

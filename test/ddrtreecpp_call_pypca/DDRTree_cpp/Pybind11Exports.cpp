@@ -79,7 +79,7 @@ py::dict DDRTree_reduce_dim_py(py::array_t<double> R_X, py::array_t<double> R_Z,
     return result;
 }
 
-PYBIND11_MODULE(ddr_tree, m)
+PYBIND11_MODULE(DDRTree_cpp, m)
 {
     m.def("pca_projection", &pca_projection_py, "Perform PCA projection");
     m.def("sqdist", &sqdist_py, "Compute squared distances");
