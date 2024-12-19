@@ -21,9 +21,9 @@ def test_ddr_tree_cpp():
     np.random.seed(42)
 
     # 参数设置
-    n_samples = 3000      # 样本数量（N）
+    n_samples = 100000      # 样本数量（N）
     n_features = 2000    # 原始特征维度（D）
-    num_clusters = 100   # 聚类数量（K）
+    num_clusters = 2000   # 聚类数量（K）
     dimensions = 2      # 降维后的维度（d）
     maxiter = 20        # 最大迭代次数
     sigma = 1e-3        # 高斯核参数

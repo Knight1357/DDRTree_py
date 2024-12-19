@@ -385,7 +385,8 @@ def DDRTree_reduce_dim_python(
         if verbose:
             logger.info("tmp: tmp = tmp - (R.T @ R)")
         # 更新 tmp: tmp = tmp - (R.T @ R)
-        tmp = tmp - R_sp.T @ R_sp
+        t = R_sp.T @ R_sp
+        tmp = tmp - t
 
         if verbose:
             logger.info(
