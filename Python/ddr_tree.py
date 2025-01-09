@@ -10,7 +10,6 @@ from utils import time_func
 import networkx as nx
 from scipy.sparse import lil_matrix, csr_matrix, csc_matrix
 
-
 @time_func
 def pca_projection_python(C, L):
     logger.warning(f"开始python pca降维")
@@ -385,8 +384,8 @@ def DDRTree_reduce_dim_python(
         if verbose:
             logger.info("tmp: tmp = tmp - (R.T @ R)")
         # 更新 tmp: tmp = tmp - (R.T @ R)
-        t = R_sp.T @ R_sp
-        tmp = tmp - t
+        # t = R_sp.T @ R_sp
+        tmp = tmp - R_sp.T @ R_sp
 
         if verbose:
             logger.info(

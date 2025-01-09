@@ -1,0 +1,14 @@
+[package]
+name = "sparse_module"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "sparse_module"
+crate-type = ["cdylib"]  # 生成共享库
+
+[dependencies]
+pyo3 = { version = "0.18", features = ["extension-module"] }
+sprs = "0.8"  # 或者根据需要选择版本
+ndarray = "0.15"
+rayon = "1.7"

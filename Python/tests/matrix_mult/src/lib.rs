@@ -4,16 +4,16 @@
 )]
 
 use pyo3::prelude::*;
-use pyo3::types::PyDict;
+use pyo3::types::{PyDict, PyString};
 use sprs::CsMat;
 
 /// 将 Python 密集矩阵转换为 Rust 的稀疏矩阵
 fn dense_to_csr(dense: &PyAny) -> PyResult<CsMat<f64>> {
     Python::with_gil(|py| {
         // 从 Python 对象提取 shape
-        let shape: Vec<usize> = dense.getattr(py, "shape")?.extract()?;
-        let rows = shape[0];
-        let cols = shape[1];
+        let shape: &PyAny = dense.getattr(py, PyString::new(py, "shape"))?;
+        let rows: usize = shape.get_item(0)?.extract()?;
+        let cols: usize = shape.get_item(1)?.extract()?;
 
         let mut data = vec![];
         let mut row_indices = vec![];
